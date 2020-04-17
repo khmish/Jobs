@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\job;
 use App\User;
+use App\job;
 use App\jobUser;
 
 
@@ -200,11 +200,35 @@ class UserController extends Controller
         if($user->save())
         {
             // return $user;
-            return redirect('/home');
+            return redirect('/loginPage');
         }
         return 'error';
     }
 
+    public function activateUser($id)
+    {
+        # code...
+        $user = User::find($id);
+        $user->active=($user->active==1)?0:1;
+        if($user->save())
+        {
+            return response()->json('success',200);
+        }
+        return response()->json('fail',400);
+
+    }
+    public function admin($id)
+    {
+        # code...
+        $user = User::find($id);
+        $user->admin=1;
+        if($user->save())
+        {
+            return response()->json('success',200);
+        }
+        return response()->json('fail',400);
+
+    }
     /**
      * Remove the specified resource from storage.
      *

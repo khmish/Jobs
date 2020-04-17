@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\jobUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class JobUserController extends Controller
 {
@@ -15,6 +18,22 @@ class JobUserController extends Controller
     public function index()
     {
         //
+    }
+
+    public function applyForJab($jobID,$UserID)
+    {
+        # code...
+        $jobUser=new jobUser;
+        $jobUser->jobID=$jobID;
+        $jobUser->UserID=$UserID;
+        // return $jobUser;
+        if($jobUser->save())
+        {
+           return redirect('/loginPage');
+        }
+        return response()->json('failed',400);
+
+
     }
 
     /**
@@ -78,8 +97,15 @@ class JobUserController extends Controller
      * @param  \App\jobUser  $jobUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(jobUser $jobUser)
+    public function destroy(Request $request)
     {
-        //
+      
+        $jobUser=jobUser::where('jobID',$request->jobID)->where('UserID',$request->UserID);
+        // return $jobUser;
+        if($jobUser->delete())
+        {
+           return response()->json('deleted',200);
+        }
+        return response()->json('failed',400);
     }
 }

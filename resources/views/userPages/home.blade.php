@@ -30,7 +30,7 @@
                        <td>{{ $job->qualification1->qualificationTitle }}</td>
                        <td>{{ $job->department1->departmentName }}</td>
                        <td>
-                           <a href="">
+                           <a href="applyForJab/{{ $job->id }}/{{Auth::user()->id}}">
                                 <i class="fas fa-check"> available</i>
                             </a>
                             

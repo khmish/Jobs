@@ -4,6 +4,8 @@ use App\job;
 use App\city;
 use App\department;
 use App\qualification;
+use App\jobUser;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +40,8 @@ Route::get('/getDepartment', 'DepartmentController@index');
 Route::post('/addDepartment', 'DepartmentController@store')->middleware('adminAuth');
 Route::post('/updateDepartment', 'DepartmentController@update')->middleware('adminAuth');
 
+//***************************************UserJobs ***************************** */
+
 
 // login control **************************************
 Route::post('/login', 'UserController@login');
@@ -48,9 +52,10 @@ Route::get('/registerPage', 'UserController@registerPage');
 
 
 // User control **************************************
-Route::get('/homeUser', 'UserController@homeUser')->name('homeUser');
+Route::get('/homeUser', 'UserController@homeUser')->name('homeUser')->middleware('auth');
 Route::get('/getJobsForUser', 'UserController@getJobsForUser');
-Route::post('/editUser', 'UserController@editUser')->name('editUser');
+Route::post('/editUser', 'UserController@editUser')->name('editUser')->middleware('auth');
+Route::get('/applyForJab/{jobID}/{UserID}', 'JobUserController@applyForJab')->name('applyForJab')->middleware('auth');
 
 
 // Admin control **************************************
@@ -60,6 +65,10 @@ Route::post('/addJob', 'JobController@store')->middleware('adminAuth');
 Route::post('/updateJob', 'JobController@update')->middleware('adminAuth');
 Route::get('/showJob/{job}', 'JobController@show')->middleware('adminAuth');
 Route::get('/showUser/{User}', 'UserController@show')->middleware('auth');
+Route::post('/deleteApplicant', 'JobUserController@destroy')->middleware('adminAuth');
+Route::get('/activateUser/{id}', 'UserController@activateUser')->middleware('adminAuth');
+Route::get('/admin/{id}', 'UserController@admin')->middleware('adminAuth');
+
 //--
 Route::prefix('menu')->group(function () {
     
@@ -76,6 +85,12 @@ Route::prefix('menu')->group(function () {
     Route::get('qualificationsPage', function(){
         $qualifications=qualification::all();
         return view('adminControl.qualifications')->with('qualifications',$qualifications);
+
+    })->middleware('adminAuth');
+
+    Route::get('jobUserPage', function(){
+        $jobUsers=jobUser::all();
+        return view('adminControl.userJob')->with('jobUsers',$jobUsers);
 
     })->middleware('adminAuth');
 

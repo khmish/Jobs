@@ -211,6 +211,8 @@
             $("#errorMsg").hide();
             $("#successMsg").hide();
             isSaved=false;
+            document.getElementById("birth").max = "2000-01-01";
+            document.getElementById("birth").min = "1960-01-01";
         }
 
         function validate1() {

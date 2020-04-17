@@ -65,7 +65,7 @@
                     {{-- birth **************************** --}}
                     <div class="form-group">
                         <label for="birth">brith date</label>
-                        <input value="{{ Carbon\Carbon::parse($user->birth)->format('Y-m-d') }}" type="date" name="birth" class="form-control" id="birth" placeholder="Enter birth">
+                        <input value="{{ Carbon\Carbon::parse($user->birth)->format('Y-m-d') }}" type="date" name="birth" class="form-control" id="birth" min="1960-01-01" max="2000-01-01" placeholder="Enter birth">
                     </div>
                     {{-- gender *************************** --}}
                     <div class="form-group">
@@ -150,7 +150,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        urlApi="http://localhost/s2PhpProj/";
+        urlApi="http://localhost/Jobs/";
         setup();
         
 
@@ -218,6 +218,8 @@
             $("#errorMsg").hide();
             $("#successMsg").hide();
             isSaved=false;
+            document.getElementById("birth").max = "2000/01/01";
+            document.getElementById("birth").min = "1960/01/01";
         }
 
         function validate1() {
@@ -244,7 +246,9 @@
 
                 $('#name').removeClass('is-invalid');
             }
-            if (!(birth.value)) {
+            
+            
+            if ( new Date('2000/01/01')<=new Date(birth.value)) {
                 errTxt += "<p>invalide brith</p>";
                 $('#birth').addClass('is-invalid');
             } else {
@@ -260,7 +264,7 @@
             }
             error.innerHTML = errTxt;
             
-            if ($emailRegex.test(email.value) && name.value != "" && (birth.value != "") &&
+            if ($emailRegex.test(email.value) && name.value != "" && ( new Date('2000/01/01')>=new Date(birth.value)) &&
                 gender.value != 0) {
 
 

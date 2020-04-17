@@ -24,5 +24,9 @@
     <li class="nav-item">
         <a id="a5" class="nav-link text-white l1" href="{{url('menu/qualificationsPage')}}"><i class="fas fa-graduation-cap"></i> Qualifications</a>
     </li>
+    <li class="nav-item">
+        <a id="a6" class="nav-link text-white l1" href="{{url('menu/jobUserPage')}}"><i class="fas fa-handshake"></i> Applicants</a>
+    </li>
+    
 </ul>
 @endif

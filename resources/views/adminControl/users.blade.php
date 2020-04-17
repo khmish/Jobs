@@ -47,19 +47,18 @@
                         
                         <td>
                             <div class="col">
-
-                                <a href="">
-    
-                                    <i class="fas fa-pencil-alt" onclick="onEdit('{{ $user->id }}')"></i>
-                                </a>
-                                <a href="">
-    
-                                    <i class="fas fa-power-off" onclick="onActivate('{{ $user->id }}')"></i>
-                                </a>
-                                <a href="">
-    
-                                    <i class="fas fa-user-tie" onclick="onaAdmin('{{ $user->id }}')"></i>
-                                </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-cogs"></i> 
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" ><i class="fas fa-lock-open" onclick="onEdit('{{ $user->id }}')"> Reset Password</i></a>
+                                      <a class="dropdown-item" ><i class="fas fa-power-off" onclick="onActivate('{{ $user->id }}')"> Activate</i></a>
+                                      <a class="dropdown-item" ><i class="fas fa-user-tie" onclick="onaAdmin('{{ $user->id }}')"> Admin</i></a>
+                                      
+                                    </div>
+                                  </div>
+                                
                             </div>
                             
                             
@@ -82,8 +81,9 @@
 
 </script>
 <script>
+    var url='http://localhost/Jobs/';
     $(document).ready(function(){
-        var url='http://localhost/s2PhpProj/'
+        var url='http://localhost/Jobs/';
         startup();
         $('#add').click(function(){
             document.getElementById('cityName').value=''
@@ -116,7 +116,7 @@
                     $('#successMsg').hide();
                     $('#errorMsg').show();
                 }
-                document.getElementById('close').click();
+                
             };
             xhttp.open("POST", url+paraUrl, true);
             xhttp.setRequestHeader("Content-type", "application/json");
@@ -131,8 +131,40 @@
             $('#a2').addClass('active');
         }
     });
+    function sendApi(paraUrl){
+            
+            
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    $('#successMsg').show();
+                    $('#errorMsg').hide();
+                }
+                else{
+                    $('#successMsg').hide();
+                    $('#errorMsg').show();
+                }
+                
+            };
+            xhttp.open("GET", url+paraUrl, true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send();
+        }
     function onEdit(parId)
     {
+        // sendApi("activateUser");
+        
+    }
+    function onActivate(parId)
+    {
+        sendApi("activateUser/"+parId);
+        
+        
+    }
+    function onaAdmin(parId)
+    {
+        sendApi("admin/"+parId);
         
         
     }

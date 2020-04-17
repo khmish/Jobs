@@ -93,7 +93,7 @@
 
 <script>
     $(document).ready(function(){
-        var url='http://localhost/s2PhpProj/'
+        var url='http://localhost/Jobs/'
         startup();
         $('#add').click(function(){
             document.getElementById('qualificationTitle').value='';
