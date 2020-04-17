@@ -239,7 +239,7 @@
 
                 $('#name').removeClass('is-invalid');
             }
-            if (!(birth.value)) {
+            if (new Date('2000/01/01')<=new Date(birth.value)) {
                 errTxt += "<p>invalide brith</p>";
                 $('#birth').addClass('is-invalid');
             } else {
@@ -254,7 +254,7 @@
                 $('#gender').removeClass('is-invalid');
             }
             error.innerHTML = errTxt;
-            if ($emailRegex.test(email.value) && name.value != "" && (birth.value != "") &&
+            if ($emailRegex.test(email.value) && name.value != "" && (new Date('2000/01/01')>=new Date(birth.value)) &&
                 gender.value != 0) {
 
 
