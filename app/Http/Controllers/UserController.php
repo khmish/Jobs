@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\job;
 use App\jobUser;
+use Carbon\Carbon;
 
 
 class UserController extends Controller
@@ -228,6 +229,45 @@ class UserController extends Controller
         }
         return response()->json('fail',400);
 
+    }
+
+    public function onHoldUsers()
+    {
+        # code...
+        $users = User::where('active',0)->get();
+        
+        $bUser =array();
+        foreach ($users as $user) {
+            # code...
+            $bUser[] =['id' =>$user->id,
+            'name'=>$user->name,
+            'Gender'=>$user->Gender,
+            'city'=>$user->city1->cityName,
+            'qualification'=>$user->qualification1->qualificationTitle,
+            'department'=>$user->department1->departmentName,
+            'birth'=>Carbon::parse($user->birth)->age];
+        }
+        return response()->json($bUser,200);
+
+    }
+    public function getUserByName(Request $request)
+    {
+        $users = User::where('name','like',$request->name)->get();
+        $bUser =array();
+        foreach ($users as $user) {
+            # code...
+            $bUser[] =['id' =>$user->id,
+            'name'=>$user->name,
+            'Gender'=>$user->Gender,
+            'city'=>$user->city1->cityName,
+            'qualification'=>$user->qualification1->qualificationTitle,
+            'department'=>$user->department1->departmentName,
+            'birth'=>Carbon::parse($user->birth)->age];
+        }
+        
+            
+        
+        return response()->json($bUser,200);
     }
     /**
      * Remove the specified resource from storage.

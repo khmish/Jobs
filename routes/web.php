@@ -68,6 +68,10 @@ Route::get('/showUser/{User}', 'UserController@show')->middleware('auth');
 Route::post('/deleteApplicant', 'JobUserController@destroy')->middleware('adminAuth');
 Route::get('/activateUser/{id}', 'UserController@activateUser')->middleware('adminAuth');
 Route::get('/admin/{id}', 'UserController@admin')->middleware('adminAuth');
+Route::post('/onHoldUsers', 'UserController@onHoldUsers')->middleware('adminAuth');
+Route::post('/getUserByName', 'UserController@getUserByName')->middleware('adminAuth');
+
+
 
 //--
 Route::prefix('menu')->group(function () {
