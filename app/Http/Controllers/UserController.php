@@ -239,13 +239,15 @@ class UserController extends Controller
         $bUser =array();
         foreach ($users as $user) {
             # code...
-            $bUser[] =['id' =>$user->id,
+            $bUser[] =[
+            'id' =>$user->id,
             'name'=>$user->name,
             'Gender'=>$user->Gender,
             'city'=>$user->city1->cityName,
             'qualification'=>$user->qualification1->qualificationTitle,
             'department'=>$user->department1->departmentName,
-            'birth'=>Carbon::parse($user->birth)->age];
+            'birth'=>Carbon::parse($user->birth)->age
+            ];
         }
         return response()->json($bUser,200);
 
@@ -256,13 +258,15 @@ class UserController extends Controller
         $bUser =array();
         foreach ($users as $user) {
             # code...
-            $bUser[] =['id' =>$user->id,
+            $bUser[] =[
+            'id' =>$user->id,
             'name'=>$user->name,
             'Gender'=>$user->Gender,
             'city'=>$user->city1->cityName,
             'qualification'=>$user->qualification1->qualificationTitle,
             'department'=>$user->department1->departmentName,
-            'birth'=>Carbon::parse($user->birth)->age];
+            'birth'=>Carbon::parse($user->birth)->age
+            ];
         }
         
             

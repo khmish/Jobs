@@ -5,6 +5,8 @@ use App\city;
 use App\department;
 use App\qualification;
 use App\jobUser;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,9 +100,33 @@ Route::prefix('menu')->group(function () {
 
     })->middleware('adminAuth');
 
+   
+
     Route::get('usersPage', function(){
         $users=User::all();
         return view('adminControl.users')->with('users',$users);
 
     })->middleware('adminAuth');
 });
+Route::post('jobByDepartment', function(Request $request){
+        
+    $jobUsers=jobUser::addSelect(['UserID' => User::select('id')
+    ->whereColumn('UserID', 'id')//join
+    ->where('department', $request->departId)])->get()->where('UserID','<>',null);
+    $bjobUsers =array();
+    foreach ($jobUsers as $jobUsers) {
+        # code...
+        $bjobUsers[] =[
+        'jobID' =>$jobUsers->jobID,
+        'UserID' =>$jobUsers->UserID,
+        'Title' =>$jobUsers->job->title,
+        'name'=>$jobUsers->user->name,
+        'qualification'=>$jobUsers->user->qualification1->qualificationTitle,
+        'department'=>$jobUsers->user->department1->departmentName,
+        'birth'=>Carbon::parse($jobUsers->user->birth)->age
+        ];
+    }
+    return response()->json($bjobUsers,200);
+    
+
+});//->middleware('adminAuth');
